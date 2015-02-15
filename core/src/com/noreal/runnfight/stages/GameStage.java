@@ -14,8 +14,10 @@ public class GameStage extends Stage {
     private static final int VIEWPORT_HEIGHT = 13;
 
     private World world;
-    private Body ground;
-    private Body runner;
+    @SuppressWarnings("unused")
+	private Body ground;
+    @SuppressWarnings("unused")
+	private Body runner;
 
     private final float TIME_STEP = 1 / 300f;
     private float accumulator = 0f;
