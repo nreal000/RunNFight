@@ -15,8 +15,6 @@ public class GameStage extends Stage {
 
     private World world;
     @SuppressWarnings("unused")
-	private Body ground;
-    @SuppressWarnings("unused")
 	private Body runner;
 
     private final float TIME_STEP = 1 / 300f;
