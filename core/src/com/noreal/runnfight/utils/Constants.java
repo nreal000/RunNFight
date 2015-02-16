@@ -15,8 +15,8 @@ public class Constants {
 	    public static final float GROUND_HEIGHT = 2f;
 	    public static final float GROUND_DENSITY = 0f;
 
-	    public static final float RUNNER_X = 10;
-	    public static final float RUNNER_Y = 10;
+	    public static final float RUNNER_X = 1;
+	    public static final float RUNNER_Y = 1;
 	    public static final float RUNNER_WIDTH = 1f;
 	    public static final float RUNNER_HEIGHT = 1f;
 	    public static float RUNNER_DENSITY = 0.5f;

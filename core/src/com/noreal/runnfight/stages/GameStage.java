@@ -26,8 +26,7 @@ public class GameStage extends Stage {
     private Box2DDebugRenderer renderer;
 
     public GameStage() {
-        world = WorldUtils.createWorld();
-        ground = WorldUtils.createGround(world);
+        world = WorldUtils.createWorld();       
         runner = WorldUtils.createRunner(world);
         renderer = new Box2DDebugRenderer();
         setupCamera();
