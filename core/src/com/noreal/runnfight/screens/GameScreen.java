@@ -1,11 +1,14 @@
 package com.noreal.runnfight.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 
 public class GameScreen implements Screen {
 	
@@ -72,11 +75,21 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.E)) {
             cam.rotate(rotationSpeed, 0, 0, 1);
         }
+
+        float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
+        float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
+
+        cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, 100/cam.viewportWidth);
+        cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
+        cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
+    
+    }
         
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-
+        cam.viewportWidth = 30f;
+        cam.viewportHeight = 30f * height/width;
+        cam.update();
 	}
 
 	@Override
@@ -105,8 +118,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-
+		mapSprite.getTexture().dispose();
+        batch.dispose();
 	}
 
 }
