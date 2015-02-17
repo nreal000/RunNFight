@@ -36,10 +36,43 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        //Clear the screen
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    }
+    	handleInput();
+        cam.update();
+        batch.setProjectionMatrix(cam.combined);
 
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.begin();
+        mapSprite.draw(batch);
+        batch.end();
+    }
+    
+    private void handleInput() {
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            cam.zoom += 0.02;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+            cam.zoom -= 0.02;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            cam.translate(-3, 0, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            cam.translate(3, 0, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            cam.translate(0, -3, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            cam.translate(0, 3, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            cam.rotate(-rotationSpeed, 0, 0, 1);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+            cam.rotate(rotationSpeed, 0, 0, 1);
+        }
+        
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
