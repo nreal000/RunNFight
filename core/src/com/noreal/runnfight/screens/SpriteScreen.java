@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class SpriteScreen implements Screen {
@@ -78,7 +77,7 @@ public class SpriteScreen implements Screen {
 	        batch.end();
 	}
 	private void movement(){
-		float moveSensitivity = 0.9f;
+		float moveSensitivity = 0.09f;
 
         Vector2 vecInputSprite = new Vector2();
         if (Gdx.input.isKeyPressed(Keys.UP))
