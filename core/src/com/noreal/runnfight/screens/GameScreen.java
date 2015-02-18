@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.Screen;
+import com.noreal.runnfight.RunNFight;
 
 public class GameScreen implements Screen {
 	
@@ -75,7 +76,9 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.E)) {
             cam.rotate(rotationSpeed, 0, 0, 1);
         }
-
+        if (Gdx.input.isKeyPressed(Input.Keys.X)) {
+        	setScreen(RunNFight.spriteScreen);
+        }
         float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
         float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
 
