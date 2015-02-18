@@ -117,6 +117,10 @@ public class Test1Screen implements Screen {
     		small.translateX(-speed);
     	}
         
+    	stayIn();
+    }
+    
+    private void stayIn(){
     	if (small.getX() > WORLD_WIDTH - small.getWidth()){
         	small.setX(WORLD_WIDTH - small.getWidth());
         }
