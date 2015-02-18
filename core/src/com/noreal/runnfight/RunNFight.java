@@ -6,12 +6,8 @@ import com.noreal.runnfight.screens.SpriteScreen;
 
 
 public class RunNFight extends Game {
-	GameScreen gameScreen;
-	SpriteScreen spriteScreen;
 	@Override
 	public void create () {
-		gameScreen = new GameScreen();
-		spriteScreen = new SpriteScreen();
-		setScreen(gameScreen);
+		setScreen(new GameScreen());
 	}
 }

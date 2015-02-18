@@ -12,6 +12,7 @@ import com.badlogic.gdx.Screen;
 import com.noreal.runnfight.RunNFight;
 
 public class GameScreen implements Screen {
+	final RunNFight game;
 	
 	static final int WORLD_WIDTH = 100;
     static final int WORLD_HEIGHT = 100;
@@ -22,7 +23,9 @@ public class GameScreen implements Screen {
     private Sprite mapSprite;
     private float rotationSpeed;
 
-    public GameScreen() {
+    public GameScreen(final RunNFight gam) {
+    	game = gam;
+    	
     	 rotationSpeed = 0.5f;
 
          mapSprite = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
@@ -77,7 +80,7 @@ public class GameScreen implements Screen {
             cam.rotate(rotationSpeed, 0, 0, 1);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.X)) {
-        	setScreen(RunNFight.spriteScreen);
+        	game.setScreen(new SpriteScreen());
         }
         float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
         float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
