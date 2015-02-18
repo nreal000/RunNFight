@@ -50,7 +50,7 @@ public class Test1Screen implements Screen {
 
     @Override
     public void render(float delta) {
-    	handleInput();
+    	handleCamInput();
         cam.update();
         batch.setProjectionMatrix(cam.combined);
 
@@ -62,7 +62,7 @@ public class Test1Screen implements Screen {
         batch.end();
     }
     
-    private void handleInput() {
+    private void handleCamInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.P)) {
             cam.zoom += 0.02;
         }
@@ -81,21 +81,21 @@ public class Test1Screen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             cam.translate(0, 3, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.K)) {
             cam.rotate(-rotationSpeed, 0, 0, 1);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.L)) {
             cam.rotate(rotationSpeed, 0, 0, 1);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.K)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.X)) {
         	game.setScreen(new SpriteScreen());
         }
         float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
         float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
 
         cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, 100/cam.viewportWidth);
-        cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
-        cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
+        cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, WORLD_WIDTH - effectiveViewportWidth / 2f);
+        cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, WORLD_HEIGHT - effectiveViewportHeight / 2f);
     
     }
         
