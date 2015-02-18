@@ -103,9 +103,7 @@ public class Test1Screen implements Screen {
     }
 
     private void handlePlayerInput() {
-    	float speed = 3;
-    	float smallX = small.getX();
-    	float smallY = small.getY();
+    	float speed = 1;
     	if (Gdx.input.isKeyPressed(Input.Keys.W)) {
     		small.translateY(speed);
     	}
@@ -118,13 +116,19 @@ public class Test1Screen implements Screen {
     	if (Gdx.input.isKeyPressed(Input.Keys.A)) {
     		small.translateX(-speed);
     	}
-    	float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
-        float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
-
-        cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, 100/cam.viewportWidth);
-        cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, WORLD_WIDTH - effectiveViewportWidth / 2f);
-        cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, WORLD_HEIGHT - effectiveViewportHeight / 2f);
-    
+        
+    	if (small.getX() > WORLD_WIDTH - small.getWidth()){
+        	small.setX(WORLD_WIDTH - small.getWidth());
+        }
+    	if (small.getX() < 0){
+        	small.setX(0);
+        }
+    	if (small.getY() > WORLD_WIDTH - small.getHeight()){
+        	small.setY(WORLD_WIDTH - small.getHeight());
+        }
+    	if (small.getY() < 0){
+        	small.setY(0);
+        }
     }
     
 	@Override
