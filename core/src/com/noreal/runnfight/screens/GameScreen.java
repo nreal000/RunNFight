@@ -30,7 +30,7 @@ public class GameScreen implements Screen {
 
          float w = Gdx.graphics.getWidth();
          float h = Gdx.graphics.getHeight();
-         cam = new OrthographicCamera(30, 30 * (h / w));
+         cam = new OrthographicCamera(25, 25 * (h / w));
          cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
          cam.update();
 
