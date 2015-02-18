@@ -13,6 +13,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class SpriteScreen implements Screen {
+	static final int WORLD_WIDTH = 100;
+    static final int WORLD_HEIGHT = 100;
+
 	private OrthographicCamera camera;
     private SpriteBatch batch;
     private Texture texture;
@@ -27,7 +30,7 @@ public class SpriteScreen implements Screen {
 		float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
 
-        camera = new OrthographicCamera(w, h);
+        camera = new OrthographicCamera(25, 25*h/w);
         batch = new SpriteBatch();
 
         lockToSprite = true;
@@ -45,6 +48,7 @@ public class SpriteScreen implements Screen {
         sprite.setPosition(-sprite.getWidth()/2, -sprite.getHeight()/2);
 
         background = new Sprite(region);
+        background.setSize(WORLD_WIDTH, WORLD_HEIGHT);
         background.setOrigin(background.getWidth() / 2, background.getHeight() / 2);
         System.out.println(background.getOriginX());
         background.setPosition(-background.getWidth() / 2, -background.getHeight() / 2);
@@ -64,49 +68,9 @@ public class SpriteScreen implements Screen {
 	        camera.update();
 
 	        camera.translate(vecCamera.cpy()/*.mul(-1f)*/);
-
-	        float moveSensitivity = 0.9f;
-
-	        Vector2 vecInputSprite = new Vector2();
-	        if (Gdx.input.isKeyPressed(Keys.UP))
-	            vecInputSprite.y += moveSensitivity;
-	        if (Gdx.input.isKeyPressed(Keys.DOWN))
-	            vecInputSprite.y -= moveSensitivity;
-	        if (Gdx.input.isKeyPressed(Keys.LEFT))
-	            vecInputSprite.x -= moveSensitivity;
-	        if (Gdx.input.isKeyPressed(Keys.RIGHT))
-	            vecInputSprite.x += moveSensitivity;
-	        if (Gdx.input.isKeyPressed(Keys.N))
-	            vecSprite.set(new Vector2());
-
-	        Vector2 vecInputCamera = new Vector2();
-	        if (Gdx.input.isKeyPressed(Keys.W))
-	            vecInputCamera.y += moveSensitivity;
-	        if (Gdx.input.isKeyPressed(Keys.S))
-	            vecInputCamera.y -= moveSensitivity;
-	        if (Gdx.input.isKeyPressed(Keys.A))
-	            vecInputCamera.x -= moveSensitivity;
-	        if (Gdx.input.isKeyPressed(Keys.D))
-	            vecInputCamera.x += moveSensitivity;
-
-	        if (Gdx.input.isKeyPressed(Keys.R)) {
-	            vecCamera.set(new Vector2());
-	            lockToSprite = false;
-	        }
-
-	        if (vecInputCamera.len2() != 0)
-	            lockToSprite = false;
-	        else if (Gdx.input.isKeyPressed(Keys.L))
-	            lockToSprite = true;
-
-	        if (lockToSprite) {
-	            vecCamera.set(vecSprite);
-	        } else {
-	            vecCamera.add(vecInputCamera);
-	        }
-
-	        vecSprite.add(vecInputSprite);
-
+	        
+	        movement();
+	        
 	        batch.setProjectionMatrix(camera.combined);
 	        batch.begin();
 	        background.draw(batch);
@@ -114,6 +78,50 @@ public class SpriteScreen implements Screen {
 	        sprite.draw(batch);
 	        //batch.draw(sprite, vecSprite.x, vecSprite.y);
 	        batch.end();
+	}
+	private void movement(){
+		float moveSensitivity = 0.9f;
+
+        Vector2 vecInputSprite = new Vector2();
+        if (Gdx.input.isKeyPressed(Keys.UP))
+            vecInputSprite.y += moveSensitivity;
+        if (Gdx.input.isKeyPressed(Keys.DOWN))
+            vecInputSprite.y -= moveSensitivity;
+        if (Gdx.input.isKeyPressed(Keys.LEFT))
+            vecInputSprite.x -= moveSensitivity;
+        if (Gdx.input.isKeyPressed(Keys.RIGHT))
+            vecInputSprite.x += moveSensitivity;
+        if (Gdx.input.isKeyPressed(Keys.N))
+            vecSprite.set(new Vector2());
+
+        Vector2 vecInputCamera = new Vector2();
+        if (Gdx.input.isKeyPressed(Keys.W))
+            vecInputCamera.y += moveSensitivity;
+        if (Gdx.input.isKeyPressed(Keys.S))
+            vecInputCamera.y -= moveSensitivity;
+        if (Gdx.input.isKeyPressed(Keys.A))
+            vecInputCamera.x -= moveSensitivity;
+        if (Gdx.input.isKeyPressed(Keys.D))
+            vecInputCamera.x += moveSensitivity;
+
+        if (Gdx.input.isKeyPressed(Keys.R)) {
+            vecCamera.set(new Vector2());
+            lockToSprite = false;
+        }
+
+        if (vecInputCamera.len2() != 0)
+            lockToSprite = false;
+        else if (Gdx.input.isKeyPressed(Keys.L))
+            lockToSprite = true;
+
+        if (lockToSprite) {
+            vecCamera.set(vecSprite);
+        } else {
+            vecCamera.add(vecInputCamera);
+        }
+
+        vecSprite.add(vecInputSprite);
+
 	}
 
 	public void resize(int width, int height) {
