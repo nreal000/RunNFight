@@ -20,7 +20,10 @@ public class Test1Screen implements Screen {
     private OrthographicCamera cam;
     private SpriteBatch batch;
 
+    private float scale = .01f;
+    
     private Sprite mapSprite;
+    private Sprite small;
     private float rotationSpeed;
 
     public Test1Screen(final RunNFight gam) {
@@ -32,6 +35,10 @@ public class Test1Screen implements Screen {
          mapSprite.setPosition(0, 0);
          mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 
+         small = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
+         small.setPosition(0,0);
+         small.setSize(scale*small.getWidth(), scale*small.getHeight());
+         
          float w = Gdx.graphics.getWidth();
          float h = Gdx.graphics.getHeight();
          cam = new OrthographicCamera(25, 25 * (h / w));
@@ -51,14 +58,15 @@ public class Test1Screen implements Screen {
 
         batch.begin();
         mapSprite.draw(batch);
+        small.draw(batch);
         batch.end();
     }
     
     private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
             cam.zoom += 0.02;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.O)) {
             cam.zoom -= 0.02;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
@@ -76,10 +84,10 @@ public class Test1Screen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             cam.rotate(-rotationSpeed, 0, 0, 1);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.L)) {
             cam.rotate(rotationSpeed, 0, 0, 1);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.X)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.K)) {
         	game.setScreen(new SpriteScreen());
         }
         float effectiveViewportWidth = cam.viewportWidth * cam.zoom;

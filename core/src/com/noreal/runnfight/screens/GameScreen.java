@@ -83,7 +83,7 @@ public class GameScreen implements Screen {
         	game.setScreen(new SpriteScreen());
         }
         if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
-        	game.setScreen(new SpriteScreen());
+        	game.setScreen(new Test1Screen(game));
         }
         float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
         float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
