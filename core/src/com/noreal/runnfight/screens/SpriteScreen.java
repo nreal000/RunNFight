@@ -63,7 +63,7 @@ public class SpriteScreen implements Screen {
 
 	        camera.update();
 
-	        camera.translate(vecCamera.cpy().mul(-1f));
+	        camera.translate(vecCamera.cpy()/*.mul(-1f)*/);
 
 	        float moveSensitivity = 0.9f;
 
