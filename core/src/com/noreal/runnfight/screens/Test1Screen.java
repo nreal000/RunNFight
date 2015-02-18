@@ -51,6 +51,7 @@ public class Test1Screen implements Screen {
     @Override
     public void render(float delta) {
     	handleCamInput();
+    	handlePlayerInput();
         cam.update();
         batch.setProjectionMatrix(cam.combined);
 
@@ -98,7 +99,24 @@ public class Test1Screen implements Screen {
         cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, WORLD_HEIGHT - effectiveViewportHeight / 2f);
     
     }
-        
+
+    private void handlePlayerInput() {
+    	float speed = 1;
+    	
+    	if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+    		small.translateY(speed);
+    	}
+    	if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+    		small.translateY(-speed);
+    	}
+    	if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+    		small.translateX(speed);
+    	}
+    	if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+    		small.translateX(-speed);
+    	}
+    }
+    
 	@Override
 	public void resize(int width, int height) {
         cam.viewportWidth = 30f;
