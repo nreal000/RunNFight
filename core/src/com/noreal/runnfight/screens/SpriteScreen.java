@@ -40,14 +40,12 @@ public class SpriteScreen implements Screen {
         texture = new Texture(Gdx.files.internal("sc_map.png"));
         texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-        TextureRegion region = new TextureRegion(texture, 0, 0, 512, 275);
-
-        sprite = new Sprite(region);
+        sprite = new Sprite(texture);
         sprite.setSize(0.1f * sprite.getWidth(), 0.1f * sprite.getHeight());
         sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
         sprite.setPosition(-sprite.getWidth()/2, -sprite.getHeight()/2);
 
-        background = new Sprite(region);
+        background = new Sprite(texture);
         background.setSize(WORLD_WIDTH, WORLD_HEIGHT);
         background.setOrigin(background.getWidth() / 2, background.getHeight() / 2);
         System.out.println(background.getOriginX());
