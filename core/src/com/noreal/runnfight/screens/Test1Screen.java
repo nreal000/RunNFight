@@ -64,6 +64,8 @@ public class Test1Screen implements Screen {
     }
     
     private void handleCamInput() {
+    	float speed = 3;
+    	
         if (Gdx.input.isKeyPressed(Input.Keys.P)) {
             cam.zoom += 0.02;
         }
@@ -71,16 +73,16 @@ public class Test1Screen implements Screen {
             cam.zoom -= 0.02;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            cam.translate(-3, 0, 0);
+            cam.translate(-speed, 0, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            cam.translate(3, 0, 0);
+            cam.translate(speed, 0, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            cam.translate(0, -3, 0);
+            cam.translate(0, -speed, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            cam.translate(0, 3, 0);
+            cam.translate(0, speed, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.K)) {
             cam.rotate(-rotationSpeed, 0, 0, 1);
@@ -94,15 +96,16 @@ public class Test1Screen implements Screen {
         float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
         float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
 
-        cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, 100/cam.viewportWidth);
+        cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, WORLD_WIDTH/cam.viewportWidth);
         cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, WORLD_WIDTH - effectiveViewportWidth / 2f);
         cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, WORLD_HEIGHT - effectiveViewportHeight / 2f);
     
     }
 
     private void handlePlayerInput() {
-    	float speed = 1;
-    	
+    	float speed = 3;
+    	float smallX = small.getX();
+    	float smallY = small.getY();
     	if (Gdx.input.isKeyPressed(Input.Keys.W)) {
     		small.translateY(speed);
     	}
@@ -115,6 +118,13 @@ public class Test1Screen implements Screen {
     	if (Gdx.input.isKeyPressed(Input.Keys.A)) {
     		small.translateX(-speed);
     	}
+    	float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
+        float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
+
+        cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, 100/cam.viewportWidth);
+        cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, WORLD_WIDTH - effectiveViewportWidth / 2f);
+        cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, WORLD_HEIGHT - effectiveViewportHeight / 2f);
+    
     }
     
 	@Override
