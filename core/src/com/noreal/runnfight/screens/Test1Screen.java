@@ -42,7 +42,7 @@ public class Test1Screen implements Screen {
          
          enemy = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
          enemy.setPosition(50,0);
-         enemy.setSize(.001f*enemy.getWidth(), .001f*enemy.getHeight());
+         enemy.setSize(scale*enemy.getWidth(), scale*enemy.getHeight());
          
          float w = Gdx.graphics.getWidth();
          float h = Gdx.graphics.getHeight();
@@ -68,6 +68,7 @@ public class Test1Screen implements Screen {
         batch.begin();
         mapSprite.draw(batch);
         player.draw(batch);
+        enemy.draw(batch);
         batch.end();
     }
     
@@ -134,11 +135,14 @@ public class Test1Screen implements Screen {
     	float dx = player.getX() - enemy.getX();
     	float dy = player.getY() - enemy.getY();
     	
-    	System.out.println(dx +" " + dy);
+    	/*System.out.println(dx +" " + dy);*/
     	
     	float angle = MathUtils.atan2(dy, dx);
-    	float anX = speed * MathUtils.sin(angle);
-    	float anY = speed * MathUtils.cos(angle);
+    	
+    	/*System.out.println(angle);*/
+    	
+    	float anX = speed * MathUtils.cos(angle);
+    	float anY = speed * MathUtils.sin(angle);
     	enemy.translate(anX, anY);
     }
     
@@ -154,6 +158,20 @@ public class Test1Screen implements Screen {
         }
     	if (player.getY() < 0){
         	player.setY(0);
+        }
+    	
+    	
+    	if (enemy.getX() > WORLD_WIDTH - enemy.getWidth()){
+        	enemy.setX(WORLD_WIDTH - enemy.getWidth());
+        }
+    	if (enemy.getX() < 0){
+        	enemy.setX(0);
+        }
+    	if (enemy.getY() > WORLD_WIDTH - enemy.getHeight()){
+        	enemy.setY(WORLD_WIDTH - enemy.getHeight());
+        }
+    	if (enemy.getY() < 0){
+        	enemy.setY(0);
         }
     }
     
