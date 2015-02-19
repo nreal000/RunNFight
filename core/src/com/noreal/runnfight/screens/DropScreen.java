@@ -78,7 +78,7 @@ public class DropScreen implements Screen {
     public void show() {
         // start the playback of the background music
         // when the screen is shown
-        rainMusic.play();
+/*        rainMusic.play();*/
     }
 
     @Override
