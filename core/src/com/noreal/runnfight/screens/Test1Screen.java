@@ -46,6 +46,8 @@ public class Test1Screen implements Screen {
          cam.update();
 
          batch = new SpriteBatch();
+         
+         System.out.println(w +" " + h);
     }
 
     @Override
