@@ -31,8 +31,8 @@ public class DropScreen implements Screen {
     public DropScreen() {
 
      // load the images for the droplet and the bucket, 64x64 pixels each
-        dropImage = new Texture(Gdx.files.internal("sc_map.png"/*"droplet.png"*/));
-        bucketImage = new Texture(Gdx.files.internal("sc_map.png"/*"bucket.png"*/));
+        dropImage = new Texture(Gdx.files.internal("droplet.png"));
+        bucketImage = new Texture(Gdx.files.internal("bucket.png"));
 
         // load the drop sound effect and the rain background "music"
         /*dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
@@ -154,7 +154,7 @@ public class DropScreen implements Screen {
 	         raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
 	         if(raindrop.y + 64 < 0) iter.remove();
 	         if(raindrop.overlaps(bucket)) {
-	            dropSound.play();
+/*	            dropSound.play();*/
 	            iter.remove();
 	         }
 	      }
