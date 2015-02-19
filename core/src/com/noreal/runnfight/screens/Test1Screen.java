@@ -48,11 +48,13 @@ public class Test1Screen implements Screen {
          batch = new SpriteBatch();
          
          System.out.println(w +" " + h);
+//         System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
     }
 
     @Override
     public void render(float delta) {
     	handleCamInput();
+//    	handlePlayerCam();
     	handlePlayerInput();
     	handleEnemy();
         cam.update();
@@ -65,6 +67,8 @@ public class Test1Screen implements Screen {
         player.draw(batch);
         enemy.draw(batch);
         batch.end();
+        
+        System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
     }
     
     private void handleCamInput() {
@@ -106,6 +110,23 @@ public class Test1Screen implements Screen {
     
     }
 
+    
+    /*private void handlePlayerCam(){
+    	float speed = 1
+    	
+    	if (cam.viewportWidth/2 ) {
+            cam.translate(-speed, 0, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            cam.translate(speed, 0, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            cam.translate(0, -speed, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            cam.translate(0, speed, 0);
+        }
+    }*/
     private void handlePlayerInput() {
     	float speed = 1;
     	if (Gdx.input.isKeyPressed(Input.Keys.W)) {
@@ -183,12 +204,13 @@ public class Test1Screen implements Screen {
         
     }
     
-	 private void setupEnemy(){
+	private void setupEnemy(){
 		 enemy = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
          enemy.setPosition(50,0);
          enemy.setSize(scale/2*enemy.getWidth(), scale/2*enemy.getHeight());
          
 	 }
+	 
 	@Override
 	public void resize(int width, int height) {
         cam.viewportWidth = vpW;
