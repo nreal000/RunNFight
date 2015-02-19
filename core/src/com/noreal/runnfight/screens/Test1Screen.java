@@ -23,7 +23,8 @@ public class Test1Screen implements Screen {
     private float scale = .01f;
     
     private Sprite mapSprite;
-    private Sprite small;
+    private Sprite player;
+    private Sprite enemy;
     private float rotationSpeed;
 
     public Test1Screen(final RunNFight gam) {
@@ -35,9 +36,13 @@ public class Test1Screen implements Screen {
          mapSprite.setPosition(0, 0);
          mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 
-         small = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
-         small.setPosition(0,0);
-         small.setSize(scale*small.getWidth(), scale*small.getHeight());
+         player = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
+         player.setPosition(011,0);
+         player.setSize(scale*player.getWidth(), scale*player.getHeight());
+         
+         enemy = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
+         enemy.setPosition(50,0);
+         enemy.setSize(.001f*enemy.getWidth(), .001f*enemy.getHeight());
          
          float w = Gdx.graphics.getWidth();
          float h = Gdx.graphics.getHeight();
@@ -54,6 +59,7 @@ public class Test1Screen implements Screen {
     public void render(float delta) {
     	handleCamInput();
     	handlePlayerInput();
+    	handleEnemy();
         cam.update();
         batch.setProjectionMatrix(cam.combined);
 
@@ -61,7 +67,7 @@ public class Test1Screen implements Screen {
 
         batch.begin();
         mapSprite.draw(batch);
-        small.draw(batch);
+        player.draw(batch);
         batch.end();
     }
     
@@ -107,33 +113,47 @@ public class Test1Screen implements Screen {
     private void handlePlayerInput() {
     	float speed = 1;
     	if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-    		small.translateY(speed);
+    		player.translateY(speed);
     	}
     	if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-    		small.translateY(-speed);
+    		player.translateY(-speed);
     	}
     	if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-    		small.translateX(speed);
+    		player.translateX(speed);
     	}
     	if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-    		small.translateX(-speed);
+    		player.translateX(-speed);
     	}
         
     	stayIn();
     }
     
+    private void handleEnemy() {
+    	float speed = 1;
+    	
+    	float dx = player.getX() - enemy.getX();
+    	float dy = player.getY() - enemy.getY();
+    	
+    	System.out.println(dx +" " + dy);
+    	
+    	float angle = MathUtils.atan2(dy, dx);
+    	float anX = speed * MathUtils.sin(angle);
+    	float anY = speed * MathUtils.cos(angle);
+    	enemy.translate(anX, anY);
+    }
+    
     private void stayIn(){
-    	if (small.getX() > WORLD_WIDTH - small.getWidth()){
-        	small.setX(WORLD_WIDTH - small.getWidth());
+    	if (player.getX() > WORLD_WIDTH - player.getWidth()){
+        	player.setX(WORLD_WIDTH - player.getWidth());
         }
-    	if (small.getX() < 0){
-        	small.setX(0);
+    	if (player.getX() < 0){
+        	player.setX(0);
         }
-    	if (small.getY() > WORLD_WIDTH - small.getHeight()){
-        	small.setY(WORLD_WIDTH - small.getHeight());
+    	if (player.getY() > WORLD_WIDTH - player.getHeight()){
+        	player.setY(WORLD_WIDTH - player.getHeight());
         }
-    	if (small.getY() < 0){
-        	small.setY(0);
+    	if (player.getY() < 0){
+        	player.setY(0);
         }
     }
     
