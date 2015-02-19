@@ -22,6 +22,9 @@ public class Test1Screen implements Screen {
 
     private float scale = .01f;
     
+    private float vpW = 25;
+    private float vpH = 25;
+    
     private Sprite mapSprite;
     private Sprite player;
     private Sprite enemy;
@@ -32,21 +35,13 @@ public class Test1Screen implements Screen {
     	
     	 rotationSpeed = 0.5f;
 
-         mapSprite = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
-         mapSprite.setPosition(0, 0);
-         mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
-
-         player = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
-         player.setPosition(011,0);
-         player.setSize(scale*player.getWidth(), scale*player.getHeight());
-         
-         enemy = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
-         enemy.setPosition(50,0);
-         enemy.setSize(scale*enemy.getWidth(), scale*enemy.getHeight());
+    	 setupMapSprite();
+         setupPlayer();
+    	 setupEnemy();
          
          float w = Gdx.graphics.getWidth();
          float h = Gdx.graphics.getHeight();
-         cam = new OrthographicCamera(25, 25 * (h / w));
+         cam = new OrthographicCamera(vpW, vpH * (h / w));
          cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
          cam.update();
 
@@ -175,10 +170,29 @@ public class Test1Screen implements Screen {
         }
     }
     
+    private void setupMapSprite(){
+    	mapSprite = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
+        mapSprite.setPosition(0, 0);
+        mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
+    }
+    
+    private void setupPlayer(){
+    	player = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
+        player.setPosition(11,0);
+        player.setSize(scale*player.getWidth(), scale*player.getHeight());
+        
+    }
+    
+	 private void setupEnemy(){
+		 enemy = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
+         enemy.setPosition(50,0);
+         enemy.setSize(scale/2*enemy.getWidth(), scale/2*enemy.getHeight());
+         
+	 }
 	@Override
 	public void resize(int width, int height) {
-        cam.viewportWidth = 30f;
-        cam.viewportHeight = 30f * height/width;
+        cam.viewportWidth = vpW;
+        cam.viewportHeight = vpH * height/width;
         cam.update();
 	}
 
