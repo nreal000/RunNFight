@@ -1,5 +1,7 @@
 package com.noreal.runnfight.screens;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,6 +10,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.Screen;
 import com.noreal.runnfight.RunNFight;
 
@@ -22,14 +26,16 @@ public class Test1Screen implements Screen {
 
     private float scale = .01f;
     
-    private float vpW = 25;
-    private float vpH = 25;
+    private float vpW = 100;
+    private float vpH = 100;
     
     private Sprite mapSprite;
     private Sprite player;
     private Sprite enemy;
     private float rotationSpeed;
 
+    private Array<Circle> bullets;
+    
     public Test1Screen(final RunNFight gam) {
     	game = gam;
     	
@@ -41,14 +47,17 @@ public class Test1Screen implements Screen {
          
          float w = Gdx.graphics.getWidth();
          float h = Gdx.graphics.getHeight();
-         cam = new OrthographicCamera(vpW, vpH * (h / w));
+         cam = new OrthographicCamera(vpW, vpH * (h / w));// check world constants
+//         cam.setToOrtho(false, vpW, vpH);
          cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
          cam.update();
 
          batch = new SpriteBatch();
          
-         System.out.println(w +" " + h);
-//         System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
+         System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
+    
+         bullets = new Array<Circle>();
+         handleBullets();
     }
 
     @Override
@@ -60,6 +69,7 @@ public class Test1Screen implements Screen {
         cam.update();
         batch.setProjectionMatrix(cam.combined);
 
+        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
@@ -68,8 +78,10 @@ public class Test1Screen implements Screen {
         enemy.draw(batch);
         batch.end();
         
-        System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
+//        System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
     }
+    
+    //handlers
     
     private void handleCamInput() {
     	float speed = 3;
@@ -162,6 +174,37 @@ public class Test1Screen implements Screen {
     	enemy.translate(anX, anY);
     }
     
+    private void handleBullets(){
+		Circle bullet = new Circle();
+		bullet.x = player.getX();
+		bullet.y = player.getY();
+		bullet.radius = 2;
+		bullets.add(bullet);
+		
+	}
+    // setups
+    
+    
+    private void setupMapSprite(){
+    	mapSprite = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
+        mapSprite.setPosition(0, 0);
+        mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
+    }
+    
+    private void setupPlayer(){
+    	player = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
+        player.setPosition(0 ,0);
+        player.setSize(scale*player.getWidth(), scale*player.getHeight());
+    }
+    
+	private void setupEnemy(){
+		 enemy = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
+         enemy.setPosition(50,0);
+         enemy.setSize(scale/2*enemy.getWidth(), scale/2*enemy.getHeight());
+         
+	 }
+	
+
     private void stayIn(){
     	if (player.getX() > WORLD_WIDTH - player.getWidth()){
         	player.setX(WORLD_WIDTH - player.getWidth());
@@ -190,27 +233,6 @@ public class Test1Screen implements Screen {
         	enemy.setY(0);
         }
     }
-    
-    private void setupMapSprite(){
-    	mapSprite = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
-        mapSprite.setPosition(0, 0);
-        mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
-    }
-    
-    private void setupPlayer(){
-    	player = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
-        player.setPosition(11,0);
-        player.setSize(scale*player.getWidth(), scale*player.getHeight());
-        
-    }
-    
-	private void setupEnemy(){
-		 enemy = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
-         enemy.setPosition(50,0);
-         enemy.setSize(scale/2*enemy.getWidth(), scale/2*enemy.getHeight());
-         
-	 }
-	 
 	@Override
 	public void resize(int width, int height) {
         cam.viewportWidth = vpW;
