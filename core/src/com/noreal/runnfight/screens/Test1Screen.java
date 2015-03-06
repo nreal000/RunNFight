@@ -33,8 +33,8 @@ public class Test1Screen implements Screen {
     
     private Sprite mapSprite;
 
-	private Texture playerimage;
-	private Texture enemyimage;
+	private Texture playerImage;
+	private Texture enemyImage;
 	private float rotationSpeed;
 
     private Array<Circle> bullets;
@@ -49,8 +49,8 @@ public class Test1Screen implements Screen {
     	
     	 rotationSpeed = 0.5f;
     	 
-    	 playerimage = new Texture(Gdx.files.internal("light_blue.png"));
-    	 enemyimage = new Texture(Gdx.files.internal("red_circle.png"));
+    	 playerImage = new Texture(Gdx.files.internal("light_blue.png"));
+    	 enemyImage = new Texture(Gdx.files.internal("red_circle.png"));
 
     	 setupMapSprite();
          setupPlayer();
@@ -85,11 +85,11 @@ public class Test1Screen implements Screen {
 
         batch.begin();
         mapSprite.draw(batch);
-        player.draw(batch);
+        batch.draw(playerImage, player.x, player.y);
         for (Circle bullet : bullets){
-        	batch,draw();
+        	batch.draw();
         }
-        enemy.draw(batch);
+        batch.draw(enemyImage, enemy.x, enemy.y);
         batch.end();
         
 //        System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
