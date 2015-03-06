@@ -26,7 +26,6 @@ public class Test1Screen implements Screen {
     private OrthographicCamera cam;
     private SpriteBatch batch;
 
-    private float scale = .01f;
     
     private float vpW = 100;
     private float vpH = 100;
@@ -87,11 +86,11 @@ public class Test1Screen implements Screen {
 
         batch.begin();
         mapSprite.draw(batch);
-        batch.draw(playerImage, player.x, player.y);
+        batch.draw(playerImage, player.x, player.y, player.width, player.height);
         for (Circle bullet : bullets){
-        	batch.draw(bulletImage, bullet.x, bullet.y);
+        	batch.draw(bulletImage, bullet.x, bullet.y, enemy.width, enemy.height);
         }
-        batch.draw(enemyImage, enemy.x, enemy.y);
+        batch.draw(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
         batch.end();
         
         Iterator<Circle> iter = bullets.iterator();
@@ -158,7 +157,7 @@ public class Test1Screen implements Screen {
         }
     }*/
     private void handlePlayerInput() {
-    	float speed = 1;
+    	float speed = 100 * Gdx.graphics.getDeltaTime();
     	if (Gdx.input.isKeyPressed(Input.Keys.W)) {
     		player.y += speed;
     	}
@@ -176,7 +175,7 @@ public class Test1Screen implements Screen {
     }
     
     private void handleEnemy() {
-    	float speed = 1;
+    	float speed = 100 * Gdx.graphics.getDeltaTime();
     	
     	float dx = player.getX() - enemy.getX();
     	float dy = player.getY() - enemy.getY();
@@ -189,7 +188,8 @@ public class Test1Screen implements Screen {
     	
     	float anX = speed * MathUtils.cos(angle);
     	float anY = speed * MathUtils.sin(angle);
-    	enemy.setPosition(anX, anY);
+    	enemy.setPosition(enemy.getX() + anX, enemy.getY() + anY);  // translates the x and y
+//    	System.out.println(anX + " " + anY);
     }
     
     // setups
