@@ -60,9 +60,9 @@ public class Test1Screen implements Screen {
          
          float w = Gdx.graphics.getWidth();
          float h = Gdx.graphics.getHeight();
-         cam = new OrthographicCamera(vpW, vpH * (h / w));// check world constants
-//         cam.setToOrtho(false, vpW, vpH);
-         cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
+         cam = new OrthographicCamera(/*vpW, vpH * (h / w)*/);// check world constants
+         cam.setToOrtho(false, vpW, vpH);
+//         cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
          cam.update();
 
          batch = new SpriteBatch();
@@ -234,7 +234,7 @@ public class Test1Screen implements Screen {
 			Circle bullet = new Circle();
 			bullet.x = player.getX();
 			bullet.y = player.getY();
-			bullet.radius = 2;
+			bullet.radius = 25;
 			bullets.add(bullet);
 			lastBulletTime = TimeUtils.nanoTime();
 		}
@@ -246,13 +246,14 @@ public class Test1Screen implements Screen {
     	if (player.getX() < 0){
         	player.setX(0);
         }
-    	if (player.getY() > WORLD_WIDTH - player.getHeight()){
-        	player.setY(WORLD_WIDTH - player.getHeight());
+    	if (player.getY() > WORLD_HEIGHT - player.getHeight()){
+        	player.setY(WORLD_HEIGHT - player.getHeight());
         }
     	if (player.getY() < 0){
         	player.setY(0);
         }
     	
+    	System.out.println(player.getX() + " " + player.getY());
     	
     	if (enemy.getX() > WORLD_WIDTH - enemy.getWidth()){
         	enemy.setX(WORLD_WIDTH - enemy.getWidth());
@@ -260,8 +261,8 @@ public class Test1Screen implements Screen {
     	if (enemy.getX() < 0){
         	enemy.setX(0);
         }
-    	if (enemy.getY() > WORLD_WIDTH - enemy.getHeight()){
-        	enemy.setY(WORLD_WIDTH - enemy.getHeight());
+    	if (enemy.getY() > WORLD_HEIGHT - enemy.getHeight()){
+        	enemy.setY(WORLD_HEIGHT - enemy.getHeight());
         }
     	if (enemy.getY() < 0){
         	enemy.setY(0);
