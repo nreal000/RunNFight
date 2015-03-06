@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.Screen;
 import com.noreal.runnfight.RunNFight;
 
@@ -35,6 +36,7 @@ public class Test1Screen implements Screen {
     private float rotationSpeed;
 
     private Array<Circle> bullets;
+    private long lastBulletTime;
     
     public Test1Screen(final RunNFight gam) {
     	game = gam;
@@ -180,7 +182,7 @@ public class Test1Screen implements Screen {
 		bullet.y = player.getY();
 		bullet.radius = 2;
 		bullets.add(bullet);
-		
+		lastBulletTime = TimeUtils.nanoTime();
 	}
     // setups
     
