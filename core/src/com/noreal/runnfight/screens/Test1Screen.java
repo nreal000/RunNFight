@@ -35,6 +35,7 @@ public class Test1Screen implements Screen {
 
 	private Texture playerImage;
 	private Texture enemyImage;
+	private Texture bulletImage;
 	private float rotationSpeed;
 
     private Array<Circle> bullets;
@@ -51,7 +52,8 @@ public class Test1Screen implements Screen {
     	 
     	 playerImage = new Texture(Gdx.files.internal("light_blue.png"));
     	 enemyImage = new Texture(Gdx.files.internal("red_circle.png"));
-
+    	 bulletImage = new Texture(Gdx.files.internal("yellow_circle.png"));
+    	 
     	 setupMapSprite();
          setupPlayer();
     	 setupEnemy();
@@ -78,7 +80,7 @@ public class Test1Screen implements Screen {
     	handlePlayerInput();
     	handleEnemy();
         cam.update();
-        batch.setProjectionMatrix(cam.combined);
+        batch.setProjectionMatrix(cam.combined);  // tells the SpriteBatch to use the coordinate system specified by the camera. 
 
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -87,10 +89,12 @@ public class Test1Screen implements Screen {
         mapSprite.draw(batch);
         batch.draw(playerImage, player.x, player.y);
         for (Circle bullet : bullets){
-        	batch.draw();
+        	batch.draw(bulletImage, bullet.x, bullet.y);
         }
         batch.draw(enemyImage, enemy.x, enemy.y);
         batch.end();
+        
+        Iterator<Circle> iter = bullets.iterator();
         
 //        System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
     }
@@ -156,16 +160,16 @@ public class Test1Screen implements Screen {
     private void handlePlayerInput() {
     	float speed = 1;
     	if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-    		player.translateY(speed);
+    		player.y += speed;
     	}
     	if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-    		player.translateY(-speed);
+    		player.y -= speed;
     	}
     	if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-    		player.translateX(speed);
+    		player.x += speed;
     	}
     	if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-    		player.translateX(-speed);
+    		player.x -= speed;
     	}
         
     	stayIn();
@@ -185,7 +189,7 @@ public class Test1Screen implements Screen {
     	
     	float anX = speed * MathUtils.cos(angle);
     	float anY = speed * MathUtils.sin(angle);
-    	enemy.translate(anX, anY);
+    	enemy.setPosition(anX, anY);
     }
     
     // setups
@@ -285,8 +289,9 @@ public class Test1Screen implements Screen {
 	@Override
 	public void dispose() {
 		mapSprite.getTexture().dispose();
-		player.getTexture().dispose();
-		player.getTexture().dispose();
+		playerImage.dispose();
+		enemyImage.dispose();
+		bulletImage.dispose();
         batch.dispose();
 	}
 
