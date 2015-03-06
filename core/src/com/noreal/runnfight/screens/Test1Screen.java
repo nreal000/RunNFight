@@ -12,16 +12,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.Screen;
 import com.noreal.runnfight.RunNFight;
+import com.noreal.runnfight.utils.Constants;
 
 public class Test1Screen implements Screen {
 	final RunNFight game;
 	
-	static final int WORLD_WIDTH = 100;
-    static final int WORLD_HEIGHT = 100;
+	static final int WORLD_WIDTH = Constants.APP_WIDTH;
+    static final int WORLD_HEIGHT = Constants.APP_HEIGHT;
 
     private OrthographicCamera cam;
     private SpriteBatch batch;
@@ -42,7 +44,6 @@ public class Test1Screen implements Screen {
 
 	private Rectangle player;
 	private Rectangle enemy;
-
     
     public Test1Screen(final RunNFight gam) {
     	game = gam;
@@ -88,12 +89,23 @@ public class Test1Screen implements Screen {
         mapSprite.draw(batch);
         batch.draw(playerImage, player.x, player.y, player.width, player.height);
         for (Circle bullet : bullets){
-        	batch.draw(bulletImage, bullet.x, bullet.y, enemy.width, enemy.height);
+        	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius*2, bullet.radius*2);
         }
         batch.draw(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
         batch.end();
         
+        if (TimeUtils.nanoTime() - lastBulletTime > 1000000000) setupBullets();
+        
         Iterator<Circle> iter = bullets.iterator();
+        while(iter.hasNext()) {
+	        Circle bullet = iter.next();
+	        if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
+	        	bullet.x -= 200 * Gdx.graphics.getDeltaTime();
+	        	if(bullet.x <0) iter.remove();
+	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
+
+	        }
+        }
         
 //        System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
     }
