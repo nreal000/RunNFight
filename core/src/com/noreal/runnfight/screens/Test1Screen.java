@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.Screen;
@@ -31,17 +32,25 @@ public class Test1Screen implements Screen {
     private float vpH = 100;
     
     private Sprite mapSprite;
-    private Sprite player;
-    private Sprite enemy;
-    private float rotationSpeed;
+
+	private Texture playerimage;
+	private Texture enemyimage;
+	private float rotationSpeed;
 
     private Array<Circle> bullets;
     private long lastBulletTime;
+
+	private Rectangle player;
+	private Rectangle enemy;
+
     
     public Test1Screen(final RunNFight gam) {
     	game = gam;
     	
     	 rotationSpeed = 0.5f;
+    	 
+    	 playerimage = new Texture(Gdx.files.internal("light_blue.png"));
+    	 enemyimage = new Texture(Gdx.files.internal("red_circle.png"));
 
     	 setupMapSprite();
          setupPlayer();
@@ -59,7 +68,7 @@ public class Test1Screen implements Screen {
          System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
     
          bullets = new Array<Circle>();
-         handleBullets();
+         setupBullets();
     }
 
     @Override
@@ -77,6 +86,9 @@ public class Test1Screen implements Screen {
         batch.begin();
         mapSprite.draw(batch);
         player.draw(batch);
+        for (Circle bullet : bullets){
+        	batch,draw();
+        }
         enemy.draw(batch);
         batch.end();
         
@@ -176,14 +188,6 @@ public class Test1Screen implements Screen {
     	enemy.translate(anX, anY);
     }
     
-    private void handleBullets(){
-		Circle bullet = new Circle();
-		bullet.x = player.getX();
-		bullet.y = player.getY();
-		bullet.radius = 2;
-		bullets.add(bullet);
-		lastBulletTime = TimeUtils.nanoTime();
-	}
     // setups
     
     
@@ -194,19 +198,31 @@ public class Test1Screen implements Screen {
     }
     
     private void setupPlayer(){
-    	player = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
-        player.setPosition(0 ,0);
-        player.setSize(scale*player.getWidth(), scale*player.getHeight());
+    	player = new Rectangle();
+        player.x = 0;
+        player.y = 0;
+        player.width = 10;
+        player.height = 10;
+//        player.setSize(scale*player.getWidth(), scale*player.getHeight());
     }
     
 	private void setupEnemy(){
-		 enemy = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
-         enemy.setPosition(50,0);
-         enemy.setSize(scale/2*enemy.getWidth(), scale/2*enemy.getHeight());
-         
+		enemy = new Rectangle();
+        enemy.x = 50;
+        enemy.y = 50;
+        enemy.width = 5;
+        enemy.height = 5;
 	 }
 	
-
+	 private void setupBullets(){
+			Circle bullet = new Circle();
+			bullet.x = player.getX();
+			bullet.y = player.getY();
+			bullet.radius = 2;
+			bullets.add(bullet);
+			lastBulletTime = TimeUtils.nanoTime();
+		}
+	
     private void stayIn(){
     	if (player.getX() > WORLD_WIDTH - player.getWidth()){
         	player.setX(WORLD_WIDTH - player.getWidth());
@@ -269,6 +285,8 @@ public class Test1Screen implements Screen {
 	@Override
 	public void dispose() {
 		mapSprite.getTexture().dispose();
+		player.getTexture().dispose();
+		player.getTexture().dispose();
         batch.dispose();
 	}
 
