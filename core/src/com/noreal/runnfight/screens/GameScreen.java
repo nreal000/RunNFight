@@ -88,6 +88,9 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.C)) {
         	game.setScreen(new DropScreen());
         }
+        if (Gdx.input.isKeyPressed(Input.Keys.V)) {
+            	game.setScreen(new ShootBulletTank());
+        }
         
         float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
         float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
