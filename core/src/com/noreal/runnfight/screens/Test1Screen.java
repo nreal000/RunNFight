@@ -29,8 +29,8 @@ public class Test1Screen implements Screen {
     private SpriteBatch batch;
 
     
-    private float vpW = 100;
-    private float vpH = 100;
+    private float vpW =800;
+    private float vpH = 800;
     
     private Sprite mapSprite;
 
@@ -61,7 +61,7 @@ public class Test1Screen implements Screen {
          float w = Gdx.graphics.getWidth();
          float h = Gdx.graphics.getHeight();
          cam = new OrthographicCamera(/*vpW, vpH * (h / w)*/);// check world constants
-         cam.setToOrtho(false, vpW, vpH);
+         cam.setToOrtho(false, vpW, vpH * (h/w));
 //         cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
          cam.update();
 
@@ -96,15 +96,15 @@ public class Test1Screen implements Screen {
         
         if (TimeUtils.nanoTime() - lastBulletTime > 1000000000) setupBullets();
         
+        if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
         Iterator<Circle> iter = bullets.iterator();
         while(iter.hasNext()) {
 	        Circle bullet = iter.next();
-	        if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
 	        	bullet.x -= 200 * Gdx.graphics.getDeltaTime();
 	        	if(bullet.x <0) iter.remove();
 	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
-
-	        }
+        }
+	        
         }
         
 //        System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
@@ -253,7 +253,7 @@ public class Test1Screen implements Screen {
         	player.setY(0);
         }
     	
-    	System.out.println(player.getX() + " " + player.getY());
+//    	System.out.println(player.getX() + " " + player.getY());
     	
     	if (enemy.getX() > WORLD_WIDTH - enemy.getWidth()){
         	enemy.setX(WORLD_WIDTH - enemy.getWidth());
