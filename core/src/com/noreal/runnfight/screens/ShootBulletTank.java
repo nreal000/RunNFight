@@ -31,8 +31,14 @@ public class ShootBulletTank implements Screen {
 	private Pixmap pixmap;
 	int screenWidth, screenHeight;
 	public ShootBulletTank(){
-		spriteBatch = new SpriteBatch(); screenWidth = Gdx.graphics.getWidth(); screenHeight = Gdx.graphics.getHeight(); tank_pos = new Vector2(screenWidth / 2 - TANK_SIZE / 2, screenHeight / 2 - TANK_SIZE / 2); bullet_pos = null; objectDirection = new Vector2(1, 0); // Pointing right 
-		bulletDirection = new Vector2(1, 0); pixmap = new Pixmap(32, 32, Pixmap.Format.RGB565);
+		spriteBatch = new SpriteBatch();
+		screenWidth = Gdx.graphics.getWidth();
+		screenHeight = Gdx.graphics.getHeight();
+		tank_pos = new Vector2(screenWidth / 2 - TANK_SIZE / 2, screenHeight / 2 - TANK_SIZE / 2);
+		bullet_pos = null;
+		objectDirection = new Vector2(1, 0); // Pointing right 
+		bulletDirection = new Vector2(1, 0);
+		pixmap = new Pixmap(32, 32, Pixmap.Format.RGB565);
 	}
 	@Override
 	public void show() {
