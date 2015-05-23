@@ -42,9 +42,20 @@ public class ShootBulletTank implements Screen {
 
 	@Override
 	public void render(float delta) {
-		update(); GL20 gl = Gdx.graphics.getGL20(); gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); gl.glClearColor(1, 1, 1, 0); gl.glClear(GL20.GL_COLOR_BUFFER_BIT); spriteBatch.begin(); if (bullet_pos != null) { // Draw bullet 
-			pixmap.drawRectangle(0, 0, BULLET_SIZE, BULLET_SIZE); spriteBatch.setColor(Color.BLUE); spriteBatch.draw(new Texture(pixmap), bullet_pos.x, bullet_pos.y, BULLET_SIZE, BULLET_SIZE); } // Draw object 
-		pixmap.drawRectangle(0, 0, TANK_SIZE, TANK_SIZE); spriteBatch.setColor(Color.GREEN); spriteBatch.draw(new Texture(pixmap), tank_pos.x, tank_pos.y, TANK_SIZE, TANK_SIZE); spriteBatch.end();// - See more at: http://www.karimamin.com/archives/75#sthash.DOtmE4ht.dpuf
+		update();
+		GL20 gl = Gdx.graphics.getGL20();
+		gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		gl.glClearColor(1, 1, 1, 0);
+		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		spriteBatch.begin();
+		if (bullet_pos != null) { // Draw bullet 
+			pixmap.drawRectangle(0, 0, BULLET_SIZE, BULLET_SIZE); spriteBatch.setColor(Color.BLUE);
+			spriteBatch.draw(new Texture(pixmap), bullet_pos.x, bullet_pos.y, BULLET_SIZE, BULLET_SIZE);
+			} // Draw object 
+		pixmap.drawRectangle(0, 0, TANK_SIZE, TANK_SIZE);
+		spriteBatch.setColor(Color.GREEN);
+		spriteBatch.draw(new Texture(pixmap), tank_pos.x, tank_pos.y, TANK_SIZE, TANK_SIZE);
+		spriteBatch.end();// - See more at: http://www.karimamin.com/archives/75#sthash.DOtmE4ht.dpuf
 	}
 
 	@Override
@@ -76,7 +87,38 @@ public class ShootBulletTank implements Screen {
 		// TODO Auto-generated method stub
 
 	}
-	private void update() { Vector2 direction = new Vector2(0, 0); float delta = Gdx.graphics.getDeltaTime() * MOVEMENT_SPEED; if (Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) { direction.x = 1 * delta; } if (Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) { direction.x = -1 * delta; } if (Gdx.input.isKeyPressed(Keys.DPAD_UP)) { direction.y = 1 * delta; } if (Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) { direction.y = -1 * delta; } if (direction.x != 0 || direction.y != 0) { tank_pos.add(direction); if (tank_pos.x < 0) tank_pos.x = 0; if (tank_pos.x > this.screenWidth - TANK_SIZE) tank_pos.x = this.screenWidth - TANK_SIZE; if (tank_pos.y < 0) tank_pos.y = 0; if (tank_pos.y > this.screenHeight - TANK_SIZE) tank_pos.y = this.screenHeight - TANK_SIZE; objectDirection.set(direction); } if (Gdx.input.isKeyPressed(Keys.F)) { bullet_pos = new Vector2(tank_pos.cpy().add( TANK_SIZE / 2 - BULLET_SIZE / 2, TANK_SIZE / 2 - BULLET_SIZE / 2)); bulletDirection.set(objectDirection); } if (bullet_pos != null) { bullet_pos.add(bulletDirection); if (bullet_pos.x < 0 || bullet_pos.x > this.screenWidth || bullet_pos.y < 0 || bullet_pos.y > this.screenHeight) { bullet_pos = null; } } }// - See more at: http://www.karimamin.com/archives/75#sthash.DOtmE4ht.dpuf
+	private void update() { Vector2 direction = new Vector2(0, 0);
+	float delta = Gdx.graphics.getDeltaTime() * MOVEMENT_SPEED;
+	if (Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
+		direction.x = 1 * delta; 
+		}
+	if (Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
+		direction.x = -1 * delta; 
+		}
+	if (Gdx.input.isKeyPressed(Keys.DPAD_UP)) {
+		direction.y = 1 * delta; 
+		}
+	if (Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) {
+		direction.y = -1 * delta; 
+		}
+	if (direction.x != 0 || direction.y != 0) {
+		tank_pos.add(direction); if (tank_pos.x < 0) tank_pos.x = 0; 
+		if (tank_pos.x > this.screenWidth - TANK_SIZE) tank_pos.x = this.screenWidth - TANK_SIZE;
+		if (tank_pos.y < 0) tank_pos.y = 0;
+		if (tank_pos.y > this.screenHeight - TANK_SIZE) tank_pos.y = this.screenHeight - TANK_SIZE;
+		objectDirection.set(direction); 
+		}
+	if (Gdx.input.isKeyPressed(Keys.F)) {
+		bullet_pos = new Vector2(tank_pos.cpy().add( TANK_SIZE / 2 - BULLET_SIZE / 2, TANK_SIZE / 2 - BULLET_SIZE / 2));
+		bulletDirection.set(objectDirection); 
+		}
+	if (bullet_pos != null) {
+		bullet_pos.add(bulletDirection);
+		if (bullet_pos.x < 0 || bullet_pos.x > this.screenWidth || bullet_pos.y < 0 || bullet_pos.y > this.screenHeight) {
+			bullet_pos = null; 
+			} 
+		} 
+	}// - See more at: http://www.karimamin.com/archives/75#sthash.DOtmE4ht.dpuf
 
 }
 
