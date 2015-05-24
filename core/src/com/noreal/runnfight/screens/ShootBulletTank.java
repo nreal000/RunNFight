@@ -29,7 +29,9 @@ public class ShootBulletTank implements Screen {
 	private Vector2 bulletDirection;
 	
 	private Pixmap pixmap;
+	
 	int screenWidth, screenHeight;
+	
 	public ShootBulletTank(){
 		spriteBatch = new SpriteBatch();
 		screenWidth = Gdx.graphics.getWidth();
@@ -93,7 +95,8 @@ public class ShootBulletTank implements Screen {
 		// TODO Auto-generated method stub
 
 	}
-	private void update() { Vector2 direction = new Vector2(0, 0);
+	private void update() { 
+	Vector2 direction = new Vector2(0, 0);
 	float delta = Gdx.graphics.getDeltaTime() * MOVEMENT_SPEED;
 	if (Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
 		direction.x = 1 * delta; 
@@ -108,7 +111,8 @@ public class ShootBulletTank implements Screen {
 		direction.y = -1 * delta; 
 		}
 	if (direction.x != 0 || direction.y != 0) {
-		tank_pos.add(direction); if (tank_pos.x < 0) tank_pos.x = 0; 
+		tank_pos.add(direction);
+		if (tank_pos.x < 0) tank_pos.x = 0; 
 		if (tank_pos.x > this.screenWidth - TANK_SIZE) tank_pos.x = this.screenWidth - TANK_SIZE;
 		if (tank_pos.y < 0) tank_pos.y = 0;
 		if (tank_pos.y > this.screenHeight - TANK_SIZE) tank_pos.y = this.screenHeight - TANK_SIZE;
