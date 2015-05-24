@@ -10,7 +10,7 @@ import com.noreal.runnfight.utils.Constants;
 public class Player {
 	Vector2 playerPos;
 	int playerSize = 10;
-	float MOVEMENT_SPEED = 50;
+	float playerSpeed = 50;
 	float size = 10;
 	Rectangle playerRect = new Rectangle();
 	
@@ -29,7 +29,7 @@ public class Player {
 	
 	public void update(){
 	Vector2 direction = new Vector2(0, 0);
-	float delta = Gdx.graphics.getDeltaTime() * MOVEMENT_SPEED;
+	float delta = Gdx.graphics.getDeltaTime() * playerSpeed;
 	
 	if (Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
 		direction.x = 1 * delta; 
