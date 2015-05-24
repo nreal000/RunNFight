@@ -57,7 +57,8 @@ public class ShootBulletTank implements Screen {
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		spriteBatch.begin();
 		if (bullet_pos != null) { // Draw bullet 
-			pixmap.drawRectangle(0, 0, BULLET_SIZE, BULLET_SIZE); spriteBatch.setColor(Color.BLUE);
+			pixmap.drawRectangle(0, 0, BULLET_SIZE, BULLET_SIZE);
+			spriteBatch.setColor(Color.BLUE);
 			spriteBatch.draw(new Texture(pixmap), bullet_pos.x, bullet_pos.y, BULLET_SIZE, BULLET_SIZE);
 			} // Draw object 
 		pixmap.drawRectangle(0, 0, TANK_SIZE, TANK_SIZE);
