@@ -16,9 +16,11 @@ public class Player {
 	
 	public Player(float x, float y){
 		playerPos = new Vector2(x, y);
+		playerRect.setSize(size);
 	}
 	public Player(){
 		playerPos = new Vector2(0, 0);
+		playerRect.setSize(size);
 	}
 	
 	public void setPPos(float x,float y){
@@ -49,6 +51,5 @@ public class Player {
 		if (playerPos.y > Constants.APP_HEIGHT - playerSize) playerPos.y = Constants.APP_HEIGHT - playerSize;
 		}
 		playerRect.setPosition(playerPos);
-		playerRect.setSize(size);
 	}
 }
