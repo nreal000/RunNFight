@@ -75,7 +75,7 @@ public class Test1Screen implements Screen {
 
     @Override
     public void render(float delta) {
-    	handleCamInput();
+//    	handleCamInput();
 //    	handlePlayerCam();
     	handlePlayerInput();
     	handleEnemy();
@@ -94,16 +94,16 @@ public class Test1Screen implements Screen {
         batch.draw(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
         batch.end();
         
-        if (TimeUtils.nanoTime() - lastBulletTime > 1000000000) setupBullets();
+        if (TimeUtils.nanoTime() - lastBulletTime > 10000000 && Gdx.input.isKeyPressed(Input.Keys.Z)) setupBullets();
         
-        if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
+//        if (Gdx.input.isKeyPressed(Input.Keys.Z)) {\\\
         Iterator<Circle> iter = bullets.iterator();
         while(iter.hasNext()) {
 	        Circle bullet = iter.next();
-	        	bullet.x -= 200 * Gdx.graphics.getDeltaTime();
+	        	bullet.x += 200 * Gdx.graphics.getDeltaTime();
 	        	if(bullet.x <0) iter.remove();
-	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
-        }
+//	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
+//        }
 	        
         }
         
@@ -112,44 +112,44 @@ public class Test1Screen implements Screen {
     
     //handlers
     
-    private void handleCamInput() {
-    	float speed = 3;
-    	
-        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
-            cam.zoom += 0.02;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.O)) {
-            cam.zoom -= 0.02;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            cam.translate(-speed, 0, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            cam.translate(speed, 0, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            cam.translate(0, -speed, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            cam.translate(0, speed, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.K)) {
-            cam.rotate(-rotationSpeed, 0, 0, 1);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.L)) {
-            cam.rotate(rotationSpeed, 0, 0, 1);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.X)) {
-        	game.setScreen(new SpriteScreen());
-        }
-        float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
-        float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
-
-        cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, WORLD_WIDTH/cam.viewportWidth);
-        cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, WORLD_WIDTH - effectiveViewportWidth / 2f);
-        cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, WORLD_HEIGHT - effectiveViewportHeight / 2f);
-    
-    }
+//    private void handleCamInput() {
+//    	float speed = 3;
+//    	
+//        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+//            cam.zoom += 0.02;
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.O)) {
+//            cam.zoom -= 0.02;
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+//            cam.translate(-speed, 0, 0);
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+//            cam.translate(speed, 0, 0);
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+//            cam.translate(0, -speed, 0);
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+//            cam.translate(0, speed, 0);
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.K)) {
+//            cam.rotate(-rotationSpeed, 0, 0, 1);
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.L)) {
+//            cam.rotate(rotationSpeed, 0, 0, 1);
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.X)) {
+//        	game.setScreen(new SpriteScreen());
+//        }
+//        float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
+//        float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
+//
+//        cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, WORLD_WIDTH/cam.viewportWidth);
+//        cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, WORLD_WIDTH - effectiveViewportWidth / 2f);
+//        cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, WORLD_HEIGHT - effectiveViewportHeight / 2f);
+//    
+//    }
 
     
     /*private void handlePlayerCam(){
