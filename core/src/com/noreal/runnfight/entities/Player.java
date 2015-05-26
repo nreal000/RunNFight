@@ -52,4 +52,11 @@ public class Player {
 		}
 		playerRect.setPosition(playerPos);
 	}
+	
+	public float getX(){
+		return playerPos.x;
+	}	
+	public float getY(){
+		return playerPos.y;
+	}
 }
