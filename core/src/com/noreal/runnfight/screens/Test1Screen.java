@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.Screen;
@@ -45,10 +47,8 @@ public class Test1Screen implements Screen {
 	private Rectangle player;
 	private Rectangle enemy;
 	
-	private enum bulletDir {
-		UP, DOWN, LEFT, RIGHT
-	}
-	private bulletDir dire;
+	private Vector2 bulletPos, bulletDir;
+	private float bulletSpeed;
     
     public Test1Screen(final RunNFight gam) {
     	game = gam;
@@ -105,7 +105,7 @@ public class Test1Screen implements Screen {
         Iterator<Circle> iter = bullets.iterator();
         while(iter.hasNext()) {
 	        Circle bullet = iter.next();
-	        	bullet.x += 200 * Gdx.graphics.getDeltaTime();
+	        	bullet.setPosition(bulletPos.add(bulletDir)); * Gdx.graphics.getDeltaTime();
 	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iter.remove();
 //	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
 //        }
@@ -210,19 +210,21 @@ public class Test1Screen implements Screen {
     }
     
     private void handleKeycalls() {
-    	if (Gdx.input.isKeyPressed(Input.Keys.UP)){
-    		dire = bulletDir.UP;
-    	}
-    	if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-    		dire = bulletDir.DOWN;
-    	}
-    	if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-    		dire = bulletDir.LEFT;
-    	}
-    	if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-    		dire = bulletDir.RIGHT;
-    	}
-    	
+    	Vector2 direction = new Vector2(0, 0);
+    	float delta = Gdx.graphics.getDeltaTime() * bulletSpeed;
+    	if (Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
+    		direction.x = 1 * delta; 
+    		}
+    	if (Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
+    		direction.x = -1 * delta; 
+    		}
+    	if (Gdx.input.isKeyPressed(Keys.DPAD_UP)) {
+    		direction.y = 1 * delta; 
+    		}
+    	if (Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) {
+    		direction.y = -1 * delta; 
+    		}
+    	bulletDir.set(direction);
     }
     
     // setups
@@ -245,8 +247,8 @@ public class Test1Screen implements Screen {
     
 	private void setupEnemy(){
 		enemy = new Rectangle();
-        enemy.x = 50;
-        enemy.y = 50;
+		bulletPos = new Vector2(50, 50);
+        enemy.setPosition(bulletPos);
         enemy.width = 5;
         enemy.height = 5;
 	 }
