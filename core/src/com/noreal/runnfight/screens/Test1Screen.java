@@ -39,7 +39,7 @@ public class Test1Screen implements Screen {
 	private Texture playerImage;
 	private Texture enemyImage;
 	private Texture bulletImage;
-	private float rotationSpeed;
+//	private float rotationSpeed;
 
     private Array<Circle> bullets;
     private long lastBulletTime;
@@ -53,11 +53,14 @@ public class Test1Screen implements Screen {
     public Test1Screen(final RunNFight gam) {
     	game = gam;
     	
-    	 rotationSpeed = 0.5f;
+//    	 rotationSpeed = 0.5f;
     	 
     	 playerImage = new Texture(Gdx.files.internal("light_blue.png"));
     	 enemyImage = new Texture(Gdx.files.internal("red_circle.png"));
     	 bulletImage = new Texture(Gdx.files.internal("yellow_circle.png"));
+    	 
+    	 bulletPos = null;
+    	 bulletDir = new Vector2(0, 1);
     	 
     	 setupMapSprite();
          setupPlayer();
@@ -84,6 +87,7 @@ public class Test1Screen implements Screen {
 //    	handlePlayerCam();
     	handlePlayerInput();
     	handleEnemy();
+        handleKeycalls();
         cam.update();
         batch.setProjectionMatrix(cam.combined);  // tells the SpriteBatch to use the coordinate system specified by the camera. 
 
@@ -105,7 +109,7 @@ public class Test1Screen implements Screen {
         Iterator<Circle> iter = bullets.iterator();
         while(iter.hasNext()) {
 	        Circle bullet = iter.next();
-	        	bullet.setPosition(bulletPos.add(bulletDir)); * Gdx.graphics.getDeltaTime();
+	        	bullet.setPosition(bulletPos.add(bulletDir));// * Gdx.graphics.getDeltaTime();
 	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iter.remove();
 //	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
 //        }
@@ -213,7 +217,7 @@ public class Test1Screen implements Screen {
     	Vector2 direction = new Vector2(0, 0);
     	float delta = Gdx.graphics.getDeltaTime() * bulletSpeed;
     	if (Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
-    		direction.x = 1 * delta; 
+    		direction.x = 1 * delta;
     		}
     	if (Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
     		direction.x = -1 * delta; 
