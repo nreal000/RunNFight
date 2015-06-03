@@ -48,7 +48,7 @@ public class Test1Screen implements Screen {
 	private Rectangle enemy;
 	
 	private Vector2 bulletPos, bulletDir;
-	private float bulletSpeed;
+	private float bulletSpeed = 100;
     
     public Test1Screen(final RunNFight gam) {
     	game = gam;
@@ -87,7 +87,7 @@ public class Test1Screen implements Screen {
 //    	handlePlayerCam();
     	handlePlayerInput();
     	handleEnemy();
-        handleKeycalls();
+        handleBulletKeycalls();
         cam.update();
         batch.setProjectionMatrix(cam.combined);  // tells the SpriteBatch to use the coordinate system specified by the camera. 
 
@@ -102,14 +102,12 @@ public class Test1Screen implements Screen {
         }
         batch.draw(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
         batch.end();
-        
+        // idea multiple bullet setups and iterations
         if (TimeUtils.nanoTime() - lastBulletTime > 10000000 && Gdx.input.isKeyPressed(Input.Keys.Z)) setupBullets();
-        
-//        if (Gdx.input.isKeyPressed(Input.Keys.Z)) {\\\
         Iterator<Circle> iter = bullets.iterator();
         while(iter.hasNext()) {
 	        Circle bullet = iter.next();
-	        	bullet.setPosition(bulletPos.add(bulletDir));// * Gdx.graphics.getDeltaTime();
+	        	bullet.setPosition(bulletPos);// * Gdx.graphics.getDeltaTime();
 	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iter.remove();
 //	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
 //        }
@@ -213,7 +211,7 @@ public class Test1Screen implements Screen {
 //    	System.out.println(anX + " " + anY);
     }
     
-    private void handleKeycalls() {
+    private void handleBulletKeycalls() {
     	Vector2 direction = new Vector2(0, 0);
     	float delta = Gdx.graphics.getDeltaTime() * bulletSpeed;
     	if (Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
@@ -229,6 +227,7 @@ public class Test1Screen implements Screen {
     		direction.y = -1 * delta; 
     		}
     	bulletDir.set(direction);
+    	bulletPos.add(bulletDir);
     }
     
     // setups
@@ -262,6 +261,7 @@ public class Test1Screen implements Screen {
 			bullet.x = player.getX();
 			bullet.y = player.getY();
 			bullet.radius = 25;
+			bulletPos.set(bullet.x, bullet.y);
 			bullets.add(bullet);
 			lastBulletTime = TimeUtils.nanoTime();
 		}
