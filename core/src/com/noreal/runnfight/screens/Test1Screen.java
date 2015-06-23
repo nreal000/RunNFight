@@ -103,7 +103,11 @@ public class Test1Screen implements Screen {
         batch.draw(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
         batch.end();
         // idea multiple bullet setups and iterations
-        if (TimeUtils.nanoTime() - lastBulletTime > 10000000 && Gdx.input.isKeyPressed(Input.Keys.Z)) setupBullets();
+        if (TimeUtils.nanoTime() - lastBulletTime > 10000000){
+        	if(Gdx.input.isKeyPressed(Input.Keys.Z)){
+        		setupBullets();
+        	}
+        }
         Iterator<Circle> iter = bullets.iterator();
         while(iter.hasNext()) {
 	        Circle bullet = iter.next();
