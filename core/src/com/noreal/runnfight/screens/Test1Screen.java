@@ -39,8 +39,6 @@ public class Test1Screen implements Screen {
 	private Texture playerImage;
 	private Texture enemyImage;
 	private Texture bulletImage;
-//	private float rotationSpeed;
-
     private Array<Circle> bullets;
     private long lastBulletTime;
 
@@ -51,10 +49,8 @@ public class Test1Screen implements Screen {
 	private float bulletSpeed = 100;
     
     public Test1Screen(final RunNFight gam) {
-    	game = gam;
+    	 game = gam;
     	
-//    	 rotationSpeed = 0.5f;
-    	 
     	 playerImage = new Texture(Gdx.files.internal("light_blue.png"));
     	 enemyImage = new Texture(Gdx.files.internal("red_circle.png"));
     	 bulletImage = new Texture(Gdx.files.internal("yellow_circle.png"));
@@ -83,8 +79,6 @@ public class Test1Screen implements Screen {
 
     @Override
     public void render(float delta) {
-//    	handleCamInput();
-//    	handlePlayerCam();
     	handlePlayerInput();
     	handleEnemy();
         handleBulletKeycalls();
