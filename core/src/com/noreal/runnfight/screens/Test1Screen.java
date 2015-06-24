@@ -77,11 +77,11 @@ public class Test1Screen implements Screen {
          bulletsLeft = new Array<Circle>();
          bulletsUp = new Array<Circle>();
          bulletsDown = new Array<Circle>();
-         
-       setupBulletsLeft();
-       setupBulletsRight();
-       setupBulletsUp();
-       setupBulletsDown();
+       
+         setupBulletsRight();
+         setupBulletsLeft();
+         setupBulletsUp();
+         setupBulletsDown();
     }
 
     @Override
@@ -97,7 +97,16 @@ public class Test1Screen implements Screen {
         batch.begin();
         mapSprite.draw(batch);
         batch.draw(playerImage, player.x, player.y, player.width, player.height);
+        for (Circle bullet : bulletsRight){
+        	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius*2, bullet.radius*2);
+        }
         for (Circle bullet : bulletsLeft){
+        	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius*2, bullet.radius*2);
+        }
+        for (Circle bullet : bulletsUp){
+        	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius*2, bullet.radius*2);
+        }
+        for (Circle bullet : bulletsDown){
         	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius*2, bullet.radius*2);
         }
         batch.draw(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
@@ -139,7 +148,7 @@ public class Test1Screen implements Screen {
         while(iterUp.hasNext()) {
 	        Circle bullet = iterUp.next();
 	        	bullet.y += bulletSpeed * Gdx.graphics.getDeltaTime();
-	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterUp.remove();
+	        	if(bullet.x <0 || bullet.x >= Constants.APP_HEIGHT) iterUp.remove();
 //	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
 //        }
 	        
@@ -147,8 +156,8 @@ public class Test1Screen implements Screen {
         Iterator<Circle> iterDown = bulletsDown.iterator();
         while(iterDown.hasNext()) {
 	        Circle bullet = iterDown.next();
-	        	bullet.y += bulletSpeed * Gdx.graphics.getDeltaTime();
-	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterDown.remove();
+	        	bullet.y -= bulletSpeed * Gdx.graphics.getDeltaTime();
+	        	if(bullet.y <0 || bullet.x >= Constants.APP_HEIGHT) iterDown.remove();
 //	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
 //        }
 	        
