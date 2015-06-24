@@ -39,7 +39,7 @@ public class Test1Screen implements Screen {
 	private Texture playerImage;
 	private Texture enemyImage;
 	private Texture bulletImage;
-    private Array<Circle> bullets;
+    private Array<Circle> bulletsLeft, bulletsRight, bulletsUp, bulletsDown;
     private long lastBulletTime;
 
 	private Rectangle player;
@@ -73,8 +73,8 @@ public class Test1Screen implements Screen {
          
          System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
     
-         bullets = new Array<Circle>();
-         setupBullets();
+         bulletsLeft = new Array<Circle>();
+         setupBulletsLeft();
     }
 
     @Override
@@ -91,22 +91,58 @@ public class Test1Screen implements Screen {
         batch.begin();
         mapSprite.draw(batch);
         batch.draw(playerImage, player.x, player.y, player.width, player.height);
-        for (Circle bullet : bullets){
+        for (Circle bullet : bulletsLeft){
         	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius*2, bullet.radius*2);
         }
         batch.draw(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
         batch.end();
         // idea multiple bullet setups and iterations
         if (TimeUtils.nanoTime() - lastBulletTime > 10000000){
-        	if(Gdx.input.isKeyPressed(Input.Keys.Z)){
-        		setupBullets();
+        	if(Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)){
+        		setupBulletsRight();
         	}
+         	if (Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
+         		setupBulletsLeft(); 
+        		}
+        	if (Gdx.input.isKeyPressed(Keys.DPAD_UP)) {
+        		setupBulletsUp(); 
+        		}
+        	if (Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) {
+        		setupBulletsDown(); 
+        		}
         }
-        Iterator<Circle> iter = bullets.iterator();
-        while(iter.hasNext()) {
-	        Circle bullet = iter.next();
-	        	bullet.setPosition(bulletPos);// * Gdx.graphics.getDeltaTime();
-	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iter.remove();
+        Iterator<Circle> iterRight = bulletsRight.iterator();
+        while(iterRight.hasNext()) {
+	        Circle bullet = iterRight.next();
+	        	bullet.x += bulletSpeed * Gdx.graphics.getDeltaTime();
+	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterRight.remove();
+//	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
+//        }
+	        
+        }
+        Iterator<Circle> iterleft = bulletsLeft.iterator();
+        while(iterleft.hasNext()) {
+	        Circle bullet = iterleft.next();
+	        	bullet.x -= bulletSpeed * Gdx.graphics.getDeltaTime();
+	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterleft.remove();
+//	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
+//        }
+	        
+        }
+        Iterator<Circle> iterUp = bulletsUp.iterator();
+        while(iterUp.hasNext()) {
+	        Circle bullet = iterUp.next();
+	        	bullet.y += bulletSpeed * Gdx.graphics.getDeltaTime();
+	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterUp.remove();
+//	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
+//        }
+	        
+        }
+        Iterator<Circle> iterDown = bulletsDown.iterator();
+        while(iterDown.hasNext()) {
+	        Circle bullet = iterDown.next();
+	        	bullet.y += bulletSpeed * Gdx.graphics.getDeltaTime();
+	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterDown.remove();
 //	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
 //        }
 	        
@@ -199,16 +235,43 @@ public class Test1Screen implements Screen {
         enemy.height = 5;
 	 }
 	
-	 private void setupBullets(){
+	 private void setupBulletsRight(){
 			Circle bullet = new Circle();
 			bullet.x = player.getX();
 			bullet.y = player.getY();
 			bullet.radius = 25;
 			bulletPos.set(bullet.x, bullet.y);
-			bullets.add(bullet);
+			bulletsRight.add(bullet);
 			lastBulletTime = TimeUtils.nanoTime();
 		}
-	
+	 private void setupBulletsLeft(){
+			Circle bullet = new Circle();
+			bullet.x = player.getX();
+			bullet.y = player.getY();
+			bullet.radius = 25;
+			bulletPos.set(bullet.x, bullet.y);
+			bulletsLeft.add(bullet);
+			lastBulletTime = TimeUtils.nanoTime();
+		}
+	 private void setupBulletsUp(){
+			Circle bulletUp = new Circle();
+			bulletUp.x = player.getX();
+			bulletUp.y = player.getY();
+			bulletUp.radius = 25;
+			bulletPos.set(bulletUp.x, bulletUp.y);
+			bulletsUp.add(bulletUp);
+			lastBulletTime = TimeUtils.nanoTime();
+		}
+	 private void setupBulletsDown(){
+			Circle bullet = new Circle();
+			bullet.x = player.getX();
+			bullet.y = player.getY();
+			bullet.radius = 25;
+			bulletPos.set(bullet.x, bullet.y);
+			bulletsDown.add(bullet);
+			lastBulletTime = TimeUtils.nanoTime();
+		}
+	 
     private void stayIn(){
     	if (player.getX() > WORLD_WIDTH - player.getWidth()){
         	player.setX(WORLD_WIDTH - player.getWidth());
