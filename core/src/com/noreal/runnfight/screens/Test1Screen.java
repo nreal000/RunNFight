@@ -74,7 +74,7 @@ public class Test1Screen implements Screen {
          System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
     
          bulletsLeft = new Array<Circle>();
-         setupBulletsLeft();
+//         setupBulletsLeft();
     }
 
     @Override
@@ -111,41 +111,48 @@ public class Test1Screen implements Screen {
         		setupBulletsDown(); 
         		}
         }
-        Iterator<Circle> iterRight = bulletsRight.iterator();
-        while(iterRight.hasNext()) {
-	        Circle bullet = iterRight.next();
-	        	bullet.x += bulletSpeed * Gdx.graphics.getDeltaTime();
-	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterRight.remove();
-//	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
-//        }
-	        
+        if(bulletsRight != null){
+	        Iterator<Circle> iterRight = bulletsRight.iterator();
+	        while(iterRight.hasNext()) {
+		        Circle bullet = iterRight.next();
+		        	bullet.x += bulletSpeed * Gdx.graphics.getDeltaTime();
+		        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterRight.remove();
+//		        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
+//	        }
+		        
+	        }
         }
-        Iterator<Circle> iterleft = bulletsLeft.iterator();
-        while(iterleft.hasNext()) {
-	        Circle bullet = iterleft.next();
-	        	bullet.x -= bulletSpeed * Gdx.graphics.getDeltaTime();
-	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterleft.remove();
-//	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
-//        }
-	        
+        if(bulletsLeft != null){
+	        Iterator<Circle> iterleft = bulletsLeft.iterator();
+	        while(iterleft.hasNext()) {
+		        Circle bullet = iterleft.next();
+		        	bullet.x -= bulletSpeed * Gdx.graphics.getDeltaTime();
+		        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterleft.remove();
+//		        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
+//	        }
+		        
+	        }
         }
-        Iterator<Circle> iterUp = bulletsUp.iterator();
-        while(iterUp.hasNext()) {
-	        Circle bullet = iterUp.next();
-	        	bullet.y += bulletSpeed * Gdx.graphics.getDeltaTime();
-	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterUp.remove();
-//	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
-//        }
-	        
+        if(bulletsUp != null){
+	        Iterator<Circle> iterUp = bulletsUp.iterator();
+	        while(iterUp.hasNext()) {
+		        Circle bullet = iterUp.next();
+		        	bullet.y += bulletSpeed * Gdx.graphics.getDeltaTime();
+		        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterUp.remove();
+//		        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
+		        
+	        }
         }
-        Iterator<Circle> iterDown = bulletsDown.iterator();
-        while(iterDown.hasNext()) {
-	        Circle bullet = iterDown.next();
-	        	bullet.y += bulletSpeed * Gdx.graphics.getDeltaTime();
-	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterDown.remove();
-//	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
-//        }
-	        
+        if(bulletsDown != null){
+	        Iterator<Circle> iterDown = bulletsDown.iterator();
+	        while(iterDown.hasNext()) {
+		        Circle bullet = iterDown.next();
+		        	bullet.y += bulletSpeed * Gdx.graphics.getDeltaTime();
+		        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterDown.remove();
+//		        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
+//	        }
+		        
+	        }
         }
         
 //        System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
