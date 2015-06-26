@@ -90,16 +90,16 @@ public class Test1Screen implements Screen { // most comments made 6/26/15 so mi
         batch.draw(playerImage, player.x, player.y, player.width, player.height);// draw player
 //        System.out.println(player.x + " " + player.y);
         for (Circle bullet : bulletsRight){ // draws bullets
-        	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius*2, bullet.radius*2);
+        	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius/10, bullet.radius/10);
         }
         for (Circle bullet : bulletsLeft){
-        	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius*2, bullet.radius*2);
+        	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius/10, bullet.radius/10);
         }
         for (Circle bullet : bulletsUp){
-        	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius*2, bullet.radius*2);
+        	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius/10, bullet.radius/10);
         }
         for (Circle bullet : bulletsDown){
-        	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius*2, bullet.radius*2);
+        	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius/10, bullet.radius/10);
         }
         batch.draw(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
         batch.end();
@@ -243,33 +243,33 @@ public class Test1Screen implements Screen { // most comments made 6/26/15 so mi
 	
 	 private void setupBulletsRight(){
 			Circle bullet = new Circle();
-			bullet.x = player.getX();
-			bullet.y = player.getY();
+			bullet.x = player.getX() + player.width/2;
+			bullet.y = player.getY() + player.height/2;
 			bullet.radius = 25;
 			bulletsRight.add(bullet);
 			lastBulletTime = TimeUtils.nanoTime();
 		}
 	 private void setupBulletsLeft(){
 			Circle bullet = new Circle();
-			bullet.x = player.getX();
-			bullet.y = player.getY();
+			bullet.x = player.getX() + player.width/2;
+			bullet.y = player.getY() + player.height/2;
 			bullet.radius = 25;
 			bulletsLeft.add(bullet);
 //			System.out.print(bullet.x + " : ");
 			lastBulletTime = TimeUtils.nanoTime();
 		}
 	 private void setupBulletsUp(){
-			Circle bulletUp = new Circle();
-			bulletUp.x = player.getX();
-			bulletUp.y = player.getY();
-			bulletUp.radius = 25;
-			bulletsUp.add(bulletUp);
+			Circle bullet = new Circle();
+			bullet.x = player.getX() + player.width/2;
+			bullet.y = player.getY() + player.height/2;
+			bullet.radius = 25;
+			bulletsUp.add(bullet);
 			lastBulletTime = TimeUtils.nanoTime();
 		}
 	 private void setupBulletsDown(){
 			Circle bullet = new Circle();
-			bullet.x = player.getX();
-			bullet.y = player.getY();
+			bullet.x = player.getX() + player.width/2;
+			bullet.y = player.getY() + player.height/2;
 			bullet.radius = 25;
 			bulletsDown.add(bullet);
 			lastBulletTime = TimeUtils.nanoTime();
