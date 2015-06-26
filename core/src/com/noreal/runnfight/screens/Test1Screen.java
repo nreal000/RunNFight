@@ -97,6 +97,7 @@ public class Test1Screen implements Screen {
         batch.begin();
         mapSprite.draw(batch);
         batch.draw(playerImage, player.x, player.y, player.width, player.height);
+//        System.out.println(player.x + " " + player.y);
         for (Circle bullet : bulletsRight){
         	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius*2, bullet.radius*2);
         }
@@ -139,7 +140,10 @@ public class Test1Screen implements Screen {
         while(iterleft.hasNext()) {
 	        Circle bullet = iterleft.next();
 	        	bullet.x -= bulletSpeed * Gdx.graphics.getDeltaTime();
-	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterleft.remove();
+	        	if(bullet.x <0 ){
+	        		iterleft.remove();
+	        		System.out.println(bullet.x);
+	        	}
 //	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
 //        }
 	        
@@ -148,7 +152,7 @@ public class Test1Screen implements Screen {
         while(iterUp.hasNext()) {
 	        Circle bullet = iterUp.next();
 	        	bullet.y += bulletSpeed * Gdx.graphics.getDeltaTime();
-	        	if(bullet.x <0 || bullet.x >= Constants.APP_HEIGHT) iterUp.remove();
+	        	if(bullet.x <0 || bullet.y >= Constants.APP_HEIGHT) iterUp.remove();
 //	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
 //        }
 	        
@@ -157,7 +161,7 @@ public class Test1Screen implements Screen {
         while(iterDown.hasNext()) {
 	        Circle bullet = iterDown.next();
 	        	bullet.y -= bulletSpeed * Gdx.graphics.getDeltaTime();
-	        	if(bullet.y <0 || bullet.x >= Constants.APP_HEIGHT) iterDown.remove();
+	        	if(bullet.y <0 || bullet.y >= Constants.APP_HEIGHT) iterDown.remove();
 //	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
 //        }
 	        
@@ -182,6 +186,9 @@ public class Test1Screen implements Screen {
     	}
     	if (Gdx.input.isKeyPressed(Input.Keys.A)) {
     		player.x -= speed;
+    	}
+    	if (Gdx.input.isKeyPressed(Input.Keys.G)) {
+    		player.x += speed/10;
     	}
         
     	stayIn();
