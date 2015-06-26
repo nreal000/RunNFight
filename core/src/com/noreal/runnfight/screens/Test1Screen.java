@@ -21,31 +21,25 @@ import com.badlogic.gdx.Screen;
 import com.noreal.runnfight.RunNFight;
 import com.noreal.runnfight.utils.Constants;
 
-public class Test1Screen implements Screen {
+public class Test1Screen implements Screen { // most comments made 6/26/15 so might not be reliable look for (?) to signify maybe
 	final RunNFight game;
 	
-	static final int WORLD_WIDTH = Constants.APP_WIDTH;
-    static final int WORLD_HEIGHT = Constants.APP_HEIGHT;
+	static final int WORLD_WIDTH = Constants.APP_WIDTH, WORLD_HEIGHT = Constants.APP_HEIGHT; // so map is size of world?
 
     private OrthographicCamera cam;
     private SpriteBatch batch;
 
     
-    private float vpW =800;
-    private float vpH = 800;
+    private float vpW =800, vpH = 800;// so camera size of world?
     
     private Sprite mapSprite;
 
-	private Texture playerImage;
-	private Texture enemyImage;
-	private Texture bulletImage;
-    private Array<Circle> bulletsLeft, bulletsRight, bulletsUp, bulletsDown;
-    private long lastBulletTime;
+	private Texture playerImage, enemyImage, bulletImage; // images
+    private Array<Circle> bulletsLeft, bulletsRight, bulletsUp, bulletsDown; // bullet direction array stuff
+    private long lastBulletTime;// bullet cool down
 
-	private Rectangle player;
-	private Rectangle enemy;
+	private Rectangle player, enemy;
 	
-	private Vector2 bulletPos, bulletDir;
 	private float bulletSpeed = 100;
     
     public Test1Screen(final RunNFight gam) {
@@ -55,9 +49,6 @@ public class Test1Screen implements Screen {
     	 enemyImage = new Texture(Gdx.files.internal("red_circle.png"));
     	 bulletImage = new Texture(Gdx.files.internal("yellow_circle.png"));
     	 
-    	 bulletPos = null;
-    	 bulletDir = new Vector2(0, 1);
-    	 
     	 setupMapSprite();
          setupPlayer();
     	 setupEnemy();
@@ -65,20 +56,20 @@ public class Test1Screen implements Screen {
          float w = Gdx.graphics.getWidth();
          float h = Gdx.graphics.getHeight();
          cam = new OrthographicCamera(/*vpW, vpH * (h / w)*/);// check world constants
-         cam.setToOrtho(false, vpW, vpH * (h/w));
+         cam.setToOrtho(false, vpW, vpH * (h/w));// makes camera size of world?
 //         cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
          cam.update();
 
          batch = new SpriteBatch();
          
-         System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
+         System.out.println(cam.viewportWidth + " " + cam.viewportHeight); // debugs for camera height ?
     
-         bulletsRight = new Array<Circle>();
+         bulletsRight = new Array<Circle>(); // declares bullet arrays for each direction // future self? better have a better way.
          bulletsLeft = new Array<Circle>();
          bulletsUp = new Array<Circle>();
          bulletsDown = new Array<Circle>();
        
-         setupBulletsRight();
+         setupBulletsRight(); // initial setup so iterator isn't null.
          setupBulletsLeft();
          setupBulletsUp();
          setupBulletsDown();
@@ -86,19 +77,19 @@ public class Test1Screen implements Screen {
 
     @Override
     public void render(float delta) {
-    	handlePlayerInput();
-    	handleEnemy();
+    	handlePlayerInput(); // player movement 
+    	handleEnemy();// enemy movement
         cam.update();
         batch.setProjectionMatrix(cam.combined);  // tells the SpriteBatch to use the coordinate system specified by the camera. 
 
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);// refresh
 
         batch.begin();
         mapSprite.draw(batch);
-        batch.draw(playerImage, player.x, player.y, player.width, player.height);
+        batch.draw(playerImage, player.x, player.y, player.width, player.height);// draw player
 //        System.out.println(player.x + " " + player.y);
-        for (Circle bullet : bulletsRight){
+        for (Circle bullet : bulletsRight){ // draws bullets
         	batch.draw(bulletImage, bullet.x, bullet.y, bullet.radius*2, bullet.radius*2);
         }
         for (Circle bullet : bulletsLeft){
@@ -113,12 +104,13 @@ public class Test1Screen implements Screen {
         batch.draw(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
         batch.end();
         // idea multiple bullet setups and iterations
-        if (TimeUtils.nanoTime() - lastBulletTime > 10000000){
-        	if(Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)){
+        if (TimeUtils.nanoTime() - lastBulletTime > 100000000){ // wait time for bullets
+        	if(Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)){//keys
         		setupBulletsRight();
         	}
          	if (Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
          		setupBulletsLeft(); 
+         		System.out.println(player.x + " " + player.y);
         		}
         	if (Gdx.input.isKeyPressed(Keys.DPAD_UP)) {
         		setupBulletsUp(); 
@@ -127,11 +119,14 @@ public class Test1Screen implements Screen {
         		setupBulletsDown(); 
         		}
         }
-        Iterator<Circle> iterRight = bulletsRight.iterator();
+        Iterator<Circle> iterRight = bulletsRight.iterator();// updates bullets per direction
         while(iterRight.hasNext()) {
 	        Circle bullet = iterRight.next();
 	        	bullet.x += bulletSpeed * Gdx.graphics.getDeltaTime();
-	        	if(bullet.x <0 || bullet.x >= Constants.APP_WIDTH) iterRight.remove();
+	        	if(bullet.x >= Constants.APP_WIDTH){ 
+	        		iterRight.remove();
+	        		System.out.println(bullet.x + " gone");
+	        	}
 //	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
 //        }
 	        
@@ -140,9 +135,10 @@ public class Test1Screen implements Screen {
         while(iterleft.hasNext()) {
 	        Circle bullet = iterleft.next();
 	        	bullet.x -= bulletSpeed * Gdx.graphics.getDeltaTime();
-	        	if(bullet.x <0 ){
+	        	System.out.println(bullet.x);
+	        	if(bullet.x <=0 ){
 	        		iterleft.remove();
-	        		System.out.println(bullet.x);
+	        		System.out.println(bullet.x + " gone");
 	        	}
 //	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
 //        }
@@ -152,7 +148,10 @@ public class Test1Screen implements Screen {
         while(iterUp.hasNext()) {
 	        Circle bullet = iterUp.next();
 	        	bullet.y += bulletSpeed * Gdx.graphics.getDeltaTime();
-	        	if(bullet.x <0 || bullet.y >= Constants.APP_HEIGHT) iterUp.remove();
+	        	if(bullet.y >= Constants.APP_HEIGHT){ 
+	        		iterUp.remove();
+	        		System.out.println(bullet.y + " gone");
+	        	}
 //	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
 //        }
 	        
@@ -161,7 +160,10 @@ public class Test1Screen implements Screen {
         while(iterDown.hasNext()) {
 	        Circle bullet = iterDown.next();
 	        	bullet.y -= bulletSpeed * Gdx.graphics.getDeltaTime();
-	        	if(bullet.y <0 || bullet.y >= Constants.APP_HEIGHT) iterDown.remove();
+	        	if(bullet.y <0){ 
+	        		iterDown.remove();
+	        		System.out.println(bullet.y + " gone");
+	        	}
 //	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
 //        }
 	        
@@ -173,7 +175,7 @@ public class Test1Screen implements Screen {
     //handlers
     
 
-    private void handlePlayerInput() {
+    private void handlePlayerInput() {// player controls
     	float speed = 100 * Gdx.graphics.getDeltaTime();
     	if (Gdx.input.isKeyPressed(Input.Keys.W)) {
     		player.y += speed;
@@ -194,7 +196,7 @@ public class Test1Screen implements Screen {
     	stayIn();
     }
     
-    private void handleEnemy() {
+    private void handleEnemy() {//enemy follow player logic
     	float speed = 100 * Gdx.graphics.getDeltaTime();
     	
     	float dx = player.getX() - enemy.getX();
@@ -216,13 +218,13 @@ public class Test1Screen implements Screen {
     // setups
     
     
-    private void setupMapSprite(){
+    private void setupMapSprite(){//make background
     	mapSprite = new Sprite(new Texture(Gdx.files.internal("sc_map.png")));
         mapSprite.setPosition(0, 0);
         mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
     }
     
-    private void setupPlayer(){
+    private void setupPlayer(){//make player
     	player = new Rectangle();
         player.x = 0;
         player.y = 0;
@@ -231,10 +233,10 @@ public class Test1Screen implements Screen {
 //        player.setSize(scale*player.getWidth(), scale*player.getHeight());
     }
     
-	private void setupEnemy(){
+	private void setupEnemy(){// make enemy
 		enemy = new Rectangle();
-		bulletPos = new Vector2(50, 50);
-        enemy.setPosition(bulletPos);
+		enemy.x = 100;
+		enemy.y = 100;
         enemy.width = 5;
         enemy.height = 5;
 	 }
@@ -253,6 +255,7 @@ public class Test1Screen implements Screen {
 			bullet.y = player.getY();
 			bullet.radius = 25;
 			bulletsLeft.add(bullet);
+//			System.out.print(bullet.x + " : ");
 			lastBulletTime = TimeUtils.nanoTime();
 		}
 	 private void setupBulletsUp(){
