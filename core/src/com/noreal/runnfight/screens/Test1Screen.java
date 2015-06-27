@@ -127,20 +127,20 @@ public class Test1Screen implements Screen { // most comments made 6/26/15 so mi
 	        		iterRight.remove();
 	        		System.out.println(bullet.x + " gone");
 	        	}
-//	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
+	        	if(Intersector.overlaps(bullet, enemy)) iterRight.remove();
 //        }
 	        
         }
-        Iterator<Circle> iterleft = bulletsLeft.iterator();
-        while(iterleft.hasNext()) {
-	        Circle bullet = iterleft.next();
+        Iterator<Circle> iterLeft = bulletsLeft.iterator();
+        while(iterLeft.hasNext()) {
+	        Circle bullet = iterLeft.next();
 	        	bullet.x -= bulletSpeed * Gdx.graphics.getDeltaTime();
 	        	System.out.println(bullet.x);
 	        	if(bullet.x <=0 ){
-	        		iterleft.remove();
+	        		iterLeft.remove();
 	        		System.out.println(bullet.x + " gone");
 	        	}
-//	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
+	        	if(Intersector.overlaps(bullet, enemy)) iterLeft.remove();
 //        }
 	        
         }
@@ -152,7 +152,7 @@ public class Test1Screen implements Screen { // most comments made 6/26/15 so mi
 	        		iterUp.remove();
 	        		System.out.println(bullet.y + " gone");
 	        	}
-//	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
+	        	if(Intersector.overlaps(bullet, enemy)) iterUp.remove();
 //        }
 	        
         }
@@ -164,7 +164,7 @@ public class Test1Screen implements Screen { // most comments made 6/26/15 so mi
 	        		iterDown.remove();
 	        		System.out.println(bullet.y + " gone");
 	        	}
-//	        	if(Intersector.overlaps(bullet, enemy)) iter.remove();
+	        	if(Intersector.overlaps(bullet, enemy)) iterDown.remove();
 //        }
 	        
         }
